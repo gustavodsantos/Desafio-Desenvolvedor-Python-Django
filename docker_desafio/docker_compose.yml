@@ -1,0 +1,15 @@
+version: "4.33.0"
+
+services:
+  database:
+    container_name: desafio
+    image: postgres:16.3
+    volumes:
+      - ./.pgdata:/var/lib/postgresql/data
+    environment:
+      - LC_ALL=C.UTF-8
+      - POSTGRES_PASSWORD=desafio
+      - POSTGRES_USER=desafio
+      - POSTGRES_DB=desafio
+    ports:
+      - 5432:5432
