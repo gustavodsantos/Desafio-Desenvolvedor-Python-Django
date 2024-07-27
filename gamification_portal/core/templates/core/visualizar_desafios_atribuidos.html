@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Desafios Atribuídos{% endblock %}
+
+{% block content %}
+<h2>Desafios Atribuídos</h2>
+<ul>
+    {% for participacao in participacoes %}
+        <li>
+            {{ participacao.desafio.nome }} - {% if participacao.aceito %}Aceito{% else %}Não Aceito{% endif %}
+            <a href="{% url 'detalhes_desafio' participacao.desafio.id %}">Detalhes</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

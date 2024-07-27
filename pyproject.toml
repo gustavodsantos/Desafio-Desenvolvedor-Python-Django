@@ -12,6 +12,7 @@ django = "^5.0.7"
 python-decouple = "^3.8"
 dj-database-url = "^2.2.0"
 psycopg2 = "^2.9.9"
+pillow = "^10.4.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -20,7 +21,7 @@ pytest = "^8.3.2"
 pytest-django = "^4.8.0"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "devpro.settings"
+DJANGO_SETTINGS_MODULE = "gamification_portal.settings"
 python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
 
 [build-system]
