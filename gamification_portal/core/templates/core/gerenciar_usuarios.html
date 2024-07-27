@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Gerenciar Usuários{% endblock %}
+
+{% block content %}
+<h2>Gerenciar Usuários</h2>
+<ul>
+    {% for corretor in corretores %}
+        <li>
+            {{ corretor.user.username }} - <a href="{% url 'editar_usuario' corretor.id %}">Editar</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

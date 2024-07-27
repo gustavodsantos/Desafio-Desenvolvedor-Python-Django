@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Atribuir Desafio{% endblock %}
+
+{% block content %}
+<h2>Atribuir Desafio</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Atribuir</button>
+</form>
+{% endblock %}
