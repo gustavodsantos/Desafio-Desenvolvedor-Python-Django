@@ -18,7 +18,8 @@ def listar_desafios(request):
 @login_required
 def detalhes_desafio(request, id):
     desafio = get_object_or_404(Desafio, id=id)
-    return render(request, 'core/detalhes_desafio.html', {'desafio': desafio})
+    participacao = ParticipacaoDesafio.objects.filter(corretor__user=request.user, desafio=desafio).first()
+    return render(request, 'core/detalhes_desafio.html', {'desafio': desafio, 'participacao': participacao})
 
 
 @login_required
@@ -74,8 +75,6 @@ def atribuir_desafio(request):
     else:
         form = AtribuirDesafioForm()
     return render(request, 'core/atribuir_desafio.html', {'form': form})
-
-# Corretores
 
 
 @login_required
