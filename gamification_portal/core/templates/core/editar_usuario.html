@@ -1,12 +1,12 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Editar Usuário{% endblock %}
+{% block title %}Editar Corretor{% endblock %}
 
 {% block content %}
-<h2>Editar Usuário</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-</form>
+    <h2>Editar Corretor</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
 {% endblock %}

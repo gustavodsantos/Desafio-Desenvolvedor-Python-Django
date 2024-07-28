@@ -1,15 +1,14 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Lista de Desafios{% endblock %}
+{% block title %}Listar Desafios{% endblock %}
 
 {% block content %}
-<h2>Desafios Disponíveis</h2>
-<ul>
-    {% for desafio in desafios %}
-        <li>
-            <a href="{% url 'detalhes_desafio' desafio.id %}">{{ desafio.nome }}</a>
-        </li>
-    {% endfor %}
-</ul>
+    <h2>Desafios Disponíveis</h2>
+    <ul>
+        {% for desafio in desafios %}
+            <li><a href="{% url 'detalhes_desafio' desafio.id %}">{{ desafio.nome }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
+
 
