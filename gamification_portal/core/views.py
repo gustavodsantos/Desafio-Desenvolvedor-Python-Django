@@ -9,6 +9,10 @@ def home(request):
     return render(request, 'core/home.html')
 
 
+def logged_out(request):
+    return render(request, 'registration/logged_out.html')
+
+
 @login_required
 def listar_desafios(request):
     desafios = Desafio.objects.all()
