@@ -11,4 +11,5 @@ urlpatterns = [
     path('usuarios/<int:id>/editar/', views.editar_usuario, name='editar_usuario'),
     path('desafios/cadastrar/', views.cadastrar_desafio, name='cadastrar_desafio'),
     path('desafios/atribuidos/', views.visualizar_desafios_atribuidos, name='visualizar_desafios_atribuidos'),
+    path('logged_out/', views.logged_out, name='logged_out'),
 ]
