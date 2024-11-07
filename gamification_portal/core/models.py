@@ -1,11 +1,15 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django_min_custom_user.models import MinAbstractUser
+
+
+class User(MinAbstractUser):
+    pass
 
 
 class Desafio(models.Model):
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
-    banner = models.ImageField(upload_to='banners/')
+    banner = models.ImageField(upload_to='banners/', blank=True, null=True)
     regras_pontuacao = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -20,7 +24,7 @@ class Corretor(models.Model):
     desafios = models.ManyToManyField(Desafio, through='ParticipacaoDesafio')
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 class ParticipacaoDesafio(models.Model):

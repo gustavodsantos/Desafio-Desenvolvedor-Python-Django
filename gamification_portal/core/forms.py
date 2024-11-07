@@ -1,11 +1,15 @@
 from django import forms
-from .models import Desafio, Corretor
+
+from .models import Corretor, Desafio
 
 
 class DesafioForm(forms.ModelForm):
     class Meta:
         model = Desafio
         fields = ['nome', 'descricao', 'banner', 'regras_pontuacao']
+
+        # Tornar o campo 'banner' não obrigatório
+        banner = forms.ImageField(required=False)
 
 
 class CorretorForm(forms.ModelForm):
