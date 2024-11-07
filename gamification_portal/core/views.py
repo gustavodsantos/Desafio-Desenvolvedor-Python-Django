@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Desafio, Corretor, ParticipacaoDesafio
-from .forms import DesafioForm, CorretorForm, AtribuirDesafioForm
+from .forms import AtribuirDesafioForm, CorretorForm, DesafioForm
+from .models import Corretor, Desafio, ParticipacaoDesafio
 
 
 def home(request):
@@ -42,7 +42,10 @@ def cadastrar_desafio(request):
         form = DesafioForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            print('Formulário válido, redirecionando...')
             return redirect('listar_desafios')
+        else:
+            print('Erros no formulário:', form.errors)
     else:
         form = DesafioForm()
     return render(request, 'core/cadastrar_desafio.html', {'form': form})
@@ -72,7 +75,12 @@ def atribuir_desafio(request):
     if request.method == 'POST':
         form = AtribuirDesafioForm(request.POST)
         if form.is_valid():
-            corretor = Corretor.objects.get(cpf=form.cleaned_data['cpf'])
+            try:
+                corretor = Corretor.objects.get(cpf=form.cleaned_data['cpf'])
+            except Corretor.DoesNotExist:
+                form.add_error('cpf', 'Corretor não encontrado.')
+                return render(request, 'core/atribuir_desafio.html', {'form': form})
+
             desafio = form.cleaned_data['desafio']
             ParticipacaoDesafio.objects.create(corretor=corretor, desafio=desafio)
             return redirect('listar_desafios')

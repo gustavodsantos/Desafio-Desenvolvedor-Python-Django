@@ -1,4 +1,4 @@
-name: Desafio CI
+name: Django CI
 
 on:
   pull_request:
@@ -34,11 +34,11 @@ jobs:
           python -m pip install poetry
           poetry install --with dev --sync
 
-      - name: Run Python Linter
-        run: poetry run flake8
+      - name: Lint
+        run: poetry run task lint
 
       - name: Copy instance config variables
         run: cp config/env-sample .env
 
-      - name: Run backend Tests
-        run: poetry run pytest --cache-clear
+      - name: Run testes do Django com cobertura
+        run: poetry run pytest gamification_portal --cov=gamification_portal --cov-fail-under=80

@@ -5,6 +5,7 @@ description = ""
 authors = ["Gustavo Junior dos Santos <gustavojuniordos@hotmail.com>"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -12,17 +13,42 @@ django = "^5.0.7"
 python-decouple = "^3.8"
 dj-database-url = "^2.2.0"
 psycopg2 = "^2.9.9"
-pillow = "^10.4.0"
+pillow = "^11.0.0"
+django-min-custom-user = "^0.2.0"
 
+[tool.poetry.group.dev]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
-flake8 = "^7.1.0"
 pytest = "^8.3.2"
 pytest-django = "^4.8.0"
+pytest-cov = "^6.0.0"
+ruff = "^0.7.2"
+taskipy = "^1.14.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "gamification_portal.settings"
 python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
+
+[tool.ruff]
+line-length=120
+exclude = ['./gamification_portal/core/migrations']
+
+[tool.ruff.lint]
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+ignore = ["PLR2004"]
+
+[tool.ruff.format]
+quote-style = 'single'
+
+[tool.taskipy.tasks]
+lint = 'ruff check . && ruff check . --diff'
+format = 'ruff check . --fix && ruff format .'
+run = 'python manage.py runserver'
+
+pre_test = 'task lint'
+test = 'pytest gamification_portal/ -s -x --cov=gamification_portal -vv'
+post_test = 'coverage html'
 
 [build-system]
 requires = ["poetry-core"]
