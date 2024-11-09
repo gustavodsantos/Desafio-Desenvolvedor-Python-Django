@@ -1,5 +1,9 @@
+import os
+
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from PIL import Image
 
 from .forms import AtribuirDesafioForm, CorretorForm, DesafioForm
 from .models import Corretor, Desafio, ParticipacaoDesafio
@@ -13,8 +17,28 @@ def logged_out(request):
     return render(request, 'registration/logged_out.html')
 
 
+def converter_jfif_para_png(diretorio):
+    for arquivo in os.listdir(diretorio):
+        if arquivo.endswith('.jfif'):
+            caminho_jfif = os.path.join(diretorio, arquivo)
+            caminho_png = os.path.join(diretorio, arquivo.replace('.jfif', '.png'))
+
+            # Abrir e converter a imagem
+            with Image.open(caminho_jfif) as img:
+                img.save(caminho_png, 'PNG')
+            print(f'{arquivo} convertido para {caminho_png}')
+
+
 @login_required
 def listar_desafios(request):
+    # Diretório onde as imagens JFIF estão localizadas
+    diretorio_banners = (
+        '/home/gustavo/PycharmProjects/Desafio-Desenvolvedor-Python-Django/docker_desafio/mediafiles/banners'
+    )
+
+    # Chama a função para converter as imagens JFIF para PNG
+    converter_jfif_para_png(diretorio_banners)
+
     desafios = Desafio.objects.all()
     return render(request, 'core/listar_desafios.html', {'desafios': desafios})
 
@@ -29,10 +53,20 @@ def detalhes_desafio(request, id):
 @login_required
 def aceitar_desafio(request, id):
     desafio = get_object_or_404(Desafio, id=id)
-    corretor = Corretor.objects.get(user=request.user)
+
+    # Tenta obter o perfil de corretor do usuário logado
+    try:
+        corretor = Corretor.objects.get(user=request.user)
+    except Corretor.DoesNotExist:
+        messages.error(request, 'Você não possui um perfil de corretor e não pode aceitar desafios.')
+        return redirect('listar_desafios')  # Redireciona para a lista de desafios, ou outra página de sua escolha
+
+    # Cria ou obtém a participação no desafio
     participacao, created = ParticipacaoDesafio.objects.get_or_create(corretor=corretor, desafio=desafio)
     participacao.aceito = True
     participacao.save()
+
+    messages.success(request, 'Desafio aceito com sucesso!')
     return redirect('listar_desafios')
 
 
@@ -64,7 +98,7 @@ def editar_usuario(request, id):
         form = CorretorForm(request.POST, instance=corretor)
         if form.is_valid():
             form.save()
-            return redirect('gerenciar_usuarios')
+            return redirect('core:gerenciar_usuarios')
     else:
         form = CorretorForm(instance=corretor)
     return render(request, 'core/editar_usuario.html', {'form': form})

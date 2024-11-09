@@ -19,13 +19,13 @@
             {% if participacao.aceito %}
                 <p>Você já aceitou este desafio!</p>
             {% else %}
-                <form method="post" action="{% url 'aceitar_desafio' desafio.id %}">
+                <form method="post" action="{% url 'core:aceitar_desafio' desafio.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Aceitar Desafio</button>
                 </form>
             {% endif %}
         {% else %}
-            <form method="post" action="{% url 'aceitar_desafio' desafio.id %}">
+            <form method="post" action="{% url 'core:aceitar_desafio' desafio.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Aceitar Desafio</button>
             </form>

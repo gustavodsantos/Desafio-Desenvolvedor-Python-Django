@@ -4,9 +4,41 @@
 
 {% block content %}
     <h2>Cadastrar Novo Desafio</h2>
-    <form method="post" enctype="multipart/form-data">
+    
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Cadastrar</button>
+
+        <div class="row py-3">
+            <div class="col-sm-10 input-group-lg">
+                {{ form.nome }}
+            </div>
+        </div>
+
+        <div class="row py-3">
+            <div class="col-sm-10 input-group-lg">
+                {{ form.descricao }}
+            </div>
+        </div>
+
+
+        <div class="row py-3">
+            <div class="col-sm-10 input-group-lg">
+                {{ form.regras_pontuacao }}
+            </div>
+        </div>
+        
+        <div class="row py-3">
+            <div class="col-sm-10 input-group-lg">
+                {{ form.banner }}
+                <label for="id_banner" class="custom-file-input">Selecionar Banner</label>
+            </div>
+        </div>
+        
+        <div class="row py-3">
+            <div class="col-sm-2">
+                <button class="btn btn-lg btn-outline-primary btn-block" type="submit">Cadastrar</button>
+            </div>
+        </div>
     </form>
+
 {% endblock %}
