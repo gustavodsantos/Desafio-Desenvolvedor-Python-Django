@@ -3,12 +3,28 @@
 {% block title %}Listar Desafios{% endblock %}
 
 {% block content %}
-    <h2>Desafios Disponíveis</h2>
-    <ul>
-        {% for desafio in desafios %}
-            <li><a href="{% url 'detalhes_desafio' desafio.id %}">{{ desafio.nome }}</a></li>
-        {% endfor %}
-    </ul>
+    <h1 class="font-weight-bold">Desafios Disponíveis</h1>
+    <div>    
+
+        <ul>
+            {% for desafio in desafios %}
+                <li><a class="link" href="{% url 'core:detalhes_desafio' desafio.id %}">{{ desafio.nome }}</a></li>
+            {% endfor %}
+        </ul>
+    
+    </div>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    
 {% endblock %}
 
 

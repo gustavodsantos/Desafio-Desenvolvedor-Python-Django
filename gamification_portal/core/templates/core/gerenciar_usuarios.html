@@ -6,7 +6,7 @@
     <h2>Corretores</h2>
     <ul>
         {% for corretor in corretores %}
-            <li>{{ corretor.user.username }} - <a href="{% url 'editar_usuario' corretor.id %}">Editar</a></li>
+            <li>{{ corretor.user.username }} - <a href="{% url 'core:editar_usuario' corretor.id %}">Editar</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

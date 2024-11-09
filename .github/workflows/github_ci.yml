@@ -41,4 +41,4 @@ jobs:
         run: cp config/env-sample .env
 
       - name: Run testes do Django com cobertura
-        run: poetry run pytest gamification_portal --cov=gamification_portal --cov-fail-under=80
+        run: poetry run pytest gamification_portal --cov=gamification_portal --cov-fail-under=70

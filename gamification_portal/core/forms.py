@@ -7,9 +7,12 @@ class DesafioForm(forms.ModelForm):
     class Meta:
         model = Desafio
         fields = ['nome', 'descricao', 'banner', 'regras_pontuacao']
-
-        # Tornar o campo 'banner' não obrigatório
-        banner = forms.ImageField(required=False)
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
+            'banner': forms.FileInput(attrs={'class': 'form-control custom-file-input'}),
+            'regras_pontuacao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Regras de Pontuação'}),
+        }
 
 
 class CorretorForm(forms.ModelForm):

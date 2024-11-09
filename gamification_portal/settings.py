@@ -126,7 +126,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'docker_desafio/staticfiles/static'
-MEDIA_URL = '/mediafiles/'
+MEDIA_URL = 'mediafiles/'
 MEDIA_ROOT = BASE_DIR / 'docker_desafio/mediafiles'
 
 # Default primary key field type
